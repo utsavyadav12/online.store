@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Utsav Yadav Store</title>
+<style>
+  /* Basic reset and fonts */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  header {
+    background-color: #e67e22;
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+  nav.menu a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  nav.menu a:hover {
+    text-decoration: underline;
+  }
+  button.toggle-dark {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  section {
+    display: none;
+  }
+  section.active {
+    display: block;
+  }
+  /* Home Section */
+  #home h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #e67e22;
+  }
+  #home p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  #home .banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #home .banner-text {
+    flex: 1 1 400px;
+  }
+  #home .banner-text button {
+    background-color: #e67e22;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  #home .banner-img {
+    flex: 1 1 400px;
+    text-align: center;
+  }
+  #home .banner-img img {
+    max-width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
+  #home .categories {
+    margin-top: 40px;
+  }
+  #home .categories h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #e67e22;
+    display: inline-block;
+  }
+  #home .categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  #home .categories-list div {
+    flex: 1 1 140px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  #home .categories-list div:hover {
+    transform: scale(1.1);
+  }
+  #home .categories-list img {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+  #home .categories-list p {
+    font-weight: 700;
+    color: #34495e;
+  }
+  #address-display {
+    margin-top: 40px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0 0 10px #ccc;
+  }
+  #address-display h4 {
+    margin-top: 0;
+    color: #e67e22;
+  }
+  /* Shop Section */
+  #shop .filter-bar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  #shop .filter-bar select {
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+  #shop .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap: 20px;
+  }
+  #shop .product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px #ccc;
+    text-align: center;
+    transition: box-shadow 0.3s;
+  }
+  #shop .product-card:hover {
+    box-shadow: 0 6px 15px #b26a00;
+  }
+  #shop .product-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  #shop .product-card h4 {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: #e67e22;
+  }
+  #shop .product-card p {
+    margin: 2px 0;
+    color: #555;
+  }
+  #shop .product-card button {
+    margin-top: 10px;
+    background-color: #e67e22;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s;
+  }
+  #shop .product-card button:hover {
+    background-color: #b25800;
+  }
+  /* Cart Section */
+  #cart {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px #ccc;
+    max-width: 600px;
+    margin: auto;
+  }
+  #cart h2 {
+    color: #e67e22;
+    margin-top: 0;
+  }
+  #cart table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  #cart th, #cart td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  #cart th {
+    background-color: #f7f7f7;
+  }
+  #cart button.remove-item {
+    background-color: #d9534f;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  #cart button.remove-item:hover {
+    background-color: #c9302c;
+  }
+  #cart .total-price {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  #checkout-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 700;
+  }
+  #checkout-form select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #checkout-form button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #e67e22;
+    border: none;
+    padding: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  /* Admin Section */
+  #admin form {
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px #ccc;
+  }
+  #admin form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 700;
+  }
+  #admin form input, #admin form select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #admin form button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #e67e22;
+    border: none;
+    padding: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  /* Login Section */
+  #login form {
+    max-width: 350px;
+    background: white;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px #ccc;
+  }
+  #login form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 700;
+  }
+  #login form input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #login form button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #e67e22;
+    border: none;
+    padding: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  /* Dark Mode */
+  body.dark {
+    background-color: #121212;
+    color: #ddd;
+  }
+  body.dark header {
+    background-color: #b45f04;
+  }
+  body.dark nav.menu a {
+    color: #ffdca6;
+  }
+  body.dark #shop .product-card {
+    background: #222;
+    box-shadow: 0 3px 10px #555;
+  }
+  body.dark #cart, body.dark #admin form, body.dark #login form {
+    background: #222;
+    box-shadow: 0 3px 15px #555;
+  }
+  body.dark input, body.dark select {
+    background: #333;
+    color: #ddd;
+    border-color: #555;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Utsav Yadav Store</h1>
+  <nav class="menu">
+    <a href="#" data-section="home">Home</a>
+    <a href="#" data-section="shop">Shop</a>
+    <a href="#" data-section="cart">Cart</a>
+    <a href="#" data-section="admin">Admin</a>
+    <a href="#" data-section="login">Login</a>
+  </nav>
+  <button class="toggle-dark">Dark Mode</button>
+</header>
+
+<main>
+  <section id="home" class="active">
+    <h2>Welcome to Utsav Yadav Store!</h2>
+    <p>Find best quality clothes, shoes, cycles, and decorations at great prices.</p>
+    <div class="banner">
+      <div class="banner-text">
+        <h3>Shop with Confidence & Style</h3>
+        <button onclick="navigateToSection('shop')">Start Shopping</button>
+      </div>
+      <div class="banner-img">
+        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=800&q=60" alt="Store Banner" />
+      </div>
+    </div>
+    <div class="categories">
+      <h3>Categories</h3>
+      <div class="categories-list">
+        <div onclick="filterCategory('clothes')">
+          <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Clothes" />
+          <p>Clothes</p>
+        </div>
+        <div onclick="filterCategory('shoes')">
+          <img src="https://cdn-icons-png.flaticon.com/512/620/620683.png" alt="Shoes" />
+          <p>Shoes</p>
+        </div>
+        <div onclick="filterCategory('cycles')">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Cycles" />
+          <p>Cycles</p>
+        </div>
+        <div onclick="filterCategory('decorations')">
+          <img src="https://cdn-icons-png.flaticon.com/512/1532/1532204.png" alt="Decorations" />
+          <p>Decorations</p>
+        </div>
+      </div>
+    </div>
+    <div id="address-display">
+      <h4>Your Address:</h4>
+      <p id="address-text">Address will appear here after login.</p>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="filter-bar">
+      <select id="categoryFilter" onchange="filterProducts()">
+        <option value="all">All Categories</option>
+        <option value="clothes">Clothes</option>
+        <option value="shoes">Shoes</option>
+        <option value="cycles">Cycles</option>
+        <option value="decorations">Decorations</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search products..." oninput="filterProducts()" />
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <section id="cart">
+    <h2>Your Shopping Cart</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price (₹)</th>
+          <th>Qty</th>
+          <th>Subtotal (₹)</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cartItems">
+        <!-- Cart items here -->
+      </tbody>
+    </table>
+    <div class="total-price" id="cartTotal">Total: ₹0</div>
+    <form id="checkout-form">
+      <label for="payment-method">Select Payment Method:</label>
+      <select id="payment-method" required>
+        <option value="Cash">Cash</option>
+        <option value="Online">Online</option>
+      </select>
+      <button type="submit">Checkout</button>
+    </form>
+  </section>
+
+  <section id="admin">
+    <h2>Admin Panel - Add Product</h2>
+    <form id="adminForm">
+      <label for="productName">Name:</label>
+      <input type="text" id="productName" required />
+
+      <label for="productPrice">Price (₹):</label>
+      <input type="number" id="productPrice" required min="1" />
+
+      <label for="productCategory">Category:</label>
+      <select id="productCategory" required>
+        <option value="">Select Category</option>
+        <option value="clothes">Clothes</option>
+        <option value="shoes">Shoes</option>
+        <option value="cycles">Cycles</option>
+        <option value="decorations">Decorations</option>
+      </select>
+
+      <label for="productImage">Image URL:</label>
+      <input type="url" id="productImage" required />
+
+      <button type="submit">Add Product</button>
+    </form>
+  </section>
+
+  <section id="login">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </section>
+</main>
+
+<script>
+  // Products data
+  let products = [
+    { id: 1, name: 'Red Shirt', price: 299, category: 'clothes', img: 'https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=400&q=80' },
+    { id: 2, name: 'Blue Shoes', price: 499, category: 'shoes', img: 'https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?auto=format&fit=crop&w=400&q=80' },
+    { id: 3, name: 'Mountain Bike', price: 7999, category: 'cycles', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80' },
+    { id: 4, name: 'Wall Decoration', price: 299, category: 'decorations', img: 'https://images.unsplash.com/photo-1549893070-b6c19c8f9d2b?auto=format&fit=crop&w=400&q=80' },
+    // Add more products if needed
+  ];
+
+  let cart = [];
+
+  // Cached DOM
+  const productsGrid = document.getElementById('productsGrid');
+  const cartItems = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+  const paymentMethod = document.getElementById('payment-method');
+  const addressText = document.getElementById('address-text');
+
+  // Navigation links
+  const menuLinks = document.querySelectorAll('nav.menu a');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const sec = link.getAttribute('data-section');
+      navigateToSection(sec);
+      if (sec === 'shop') {
+        renderProducts(products);
+        resetFilters();
+      } else if (sec === 'cart') {
+        renderCart();
+      }
+    });
+  });
+
+  // Toggle dark mode
+  document.querySelector('.toggle-dark').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
+
+  // Navigation function
+  function navigateToSection(sectionId) {
+    document.querySelectorAll('main section').forEach(sec => {
+      sec.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+  }
+
+  // Render products on Shop page
+  function renderProducts(list) {
+    productsGrid.innerHTML = '';
+    if (list.length === 0) {
+      productsGrid.innerHTML = '<p>No products found.</p>';
+      return;
+    }
+    list.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'product-card';
+      div.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" />
+        <h4>${p.name}</h4>
+        <p>Category: ${p.category}</p>
+        <p>Price: ₹${p.price}</p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      `;
+      productsGrid.appendChild(div);
+    });
+  }
+
+  // Filter products by category & search
+  function filterProducts() {
+    const category = document.getElementById('categoryFilter').value;
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    let filtered = products;
+
+    if (category !== 'all') {
+      filtered = filtered.filter(p => p.category === category);
+    }
+    if (search) {
+      filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
+    }
+    renderProducts(filtered);
+  }
+
+  // Filter category from categories list
+  function filterCategory(category) {
+    document.getElementById('categoryFilter').value = category;
+    document.getElementById('searchInput').value = '';
+    filterProducts();
+    navigateToSection('shop');
+  }
+
+  // Reset filters
+  function resetFilters() {
+    document.getElementById('categoryFilter').value = 'all';
+    document.getElementById('searchInput').value = '';
+  }
+
+  // Add product to cart
+  function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const cartItem = cart.find(c => c.id === id);
+    if (cartItem) {
+      cartItem.qty += 1;
+    } else {
+      cart.push({ ...product, qty: 1 });
+    }
+    alert(`${product.name} added to cart.`);
+  }
+
+  // Render cart
+  function renderCart() {
+    cartItems.innerHTML = '';
+    if (cart.length === 0) {
+      cartItems.innerHTML = '<tr><td colspan="5">Your cart is empty.</td></tr>';
+      cartTotal.textContent = 'Total: ₹0';
+      return;
+    }
+    let total = 0;
+    cart.forEach(item => {
+      const subtotal = item.price * item.qty;
+      total += subtotal;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>₹${item.price}</td>
+        <td><input type="number" min="1" value="${item.qty}" onchange="updateQuantity(${item.id}, this.value)" /></td>
+        <td>₹${subtotal}</td>
+        <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
+      `;
+      cartItems.appendChild(tr);
+    });
+    cartTotal.textContent = 'Total: ₹' + total;
+  }
+
+  // Update quantity in cart
+  function updateQuantity(id, qty) {
+    const item = cart.find(c => c.id === id);
+    if (item) {
+      item.qty = parseInt(qty);
+      if (item.qty < 1) item.qty = 1;
+      renderCart();
+    }
+  }
+
+  // Remove item from cart
+  function removeFromCart(id) {
+    cart = cart.filter(c => c.id !== id);
+    renderCart();
+  }
+
+  // Admin add product
+  document.getElementById('adminForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('productName').value.trim();
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const category = document.getElementById('productCategory').value;
+    const img = document.getElementById('productImage').value.trim();
+    if (!name || !price || !category || !img) {
+      alert('Please fill all fields.');
+      return;
+    }
+    const newId = products.length ? products[products.length - 1].id + 1 : 1;
+    products.push({ id: newId, name, price, category, img });
+    alert('Product added successfully!');
+    document.getElementById('adminForm').reset();
+    if (document.getElementById('shop').classList.contains('active')) {
+      renderProducts(products);
+    }
+  });
+
+  // Login form (dummy)
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (username === 'admin' && password === 'admin123') {
+      alert('Login successful! Welcome Admin.');
+      addressText.textContent = 'Admin Address: 123 Admin Lane, Utsav City';
+      navigateToSection('home');
+    } else if (username === 'user' && password === 'user123') {
+      alert('Login successful! Welcome User.');
+      addressText.textContent = 'User Address: 456 User Street, Utsav City';
+      navigateToSection('home');
+    } else {
+      alert('Invalid credentials. Please try again.');
+    }
+  });
+
+  // Checkout form
+  document.getElementById('checkout-form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+    const payment = paymentMethod.value;
+    alert(`Order placed successfully using ${payment} payment!`);
+    cart = [];
+    renderCart();
+    navigateToSection('home');
+  });
+
+  // Initial render
+  renderProducts(products);
+</script>
+
+</body>
+</html>
+sss
